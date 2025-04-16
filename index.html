@@ -3,35 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文字動畫展示</title>
+  <title>滑入文字動畫</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: "微軟正黑體", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-          }
-
-    .slide-in-text {
-      opacity: 0;
-      transform: translateX(-100px);
-      animation: slideInLeft 1.2s ease-out forwards;
-      font-size: 2rem;
-      color: #333;
+      background-color: #ffffff;
     }
 
-    @keyframes slideInLeft {
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+    .spacer {
+      height: 100vh; /* 占滿一頁高度，讓滾動有效果 */
+    }
+
+    .slide-text {
+      opacity: 0;
+      transition: all 1s ease;
+      font-size: 2rem;
+      margin: 100px 20px;
+      max-width: 90%;
+    }
+
+    .left-slide {
+      transform: translateX(-100px);
+      text-align: left;
+    }
+
+    .right-slide {
+      transform: translateX(100px);
+      text-align: right;
+    }
+
+    .show-left {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .show-right {
+      transform: translateX(0);
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="slide-in-text">大家好我是倪冠澤</div>
+
+  <div class="spacer"></div>
+
+  <div class="slide-text left-slide" id="leftText">這段文字從左邊滑入，靠左顯示</div>
+
+  <div class="spacer"></div>
+
+  <div class="slide-text right-slide" id="rightText">這段文字從右邊滑入，靠右顯示</div>
+
+  <div class="spacer"></div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const el = entry.target;
+        if (entry.isIntersecting) {
+          if (el.classList.contains('left-slide')) {
+            el.classList.add('show-left');
+          }
+          if (el.classList.contains('right-slide')) {
+            el.classList.add('show-right');
+          }
+        } else {
+          el.classList.remove('show-left', 'show-right');
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+
+    document.querySelectorAll('.slide-text').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
