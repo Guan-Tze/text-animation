@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文字動畫展示</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "微軟正黑體", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .slide-in-text {
+      opacity: 0;
+      transform: translateX(-100px);
+      animation: slideInLeft 1.2s ease-out forwards;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    @keyframes slideInLeft {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-in-text">這段文字從左滑入</div>
+</body>
+</html>
